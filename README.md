@@ -22,7 +22,7 @@ Ouvrez le fichier `.env` à la racine du projet et copiez le bloc :
 
 et collez-le dans le fichier `.env.local`.
 
-Copiez aussi le bloc dans le fichier `.env` :
+Copiez aussi le bloc suivant dans le fichier `.env` :
 
     DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 
