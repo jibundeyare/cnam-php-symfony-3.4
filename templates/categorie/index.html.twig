@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title%}Catégorie index{% endblock %}
+
+{% block body %}
+<h1>Catégorie index</h1>
+
+<table>
+    <tr>
+        <th>numcat</th>
+        <th>libelle</th>
+        <th>tauxtva</th>
+    </tr>
+    {% for categorie in categories %}
+        <tr>
+            <td>
+                {{ categorie.numcat }}
+            </td>
+            <td>
+                {{ categorie.libelle }}
+            </td>
+            <td>
+                {{ categorie.tauxtva }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
