@@ -20,13 +20,13 @@ Ouvrez le fichier `.env` à la racine du projet et copiez le bloc :
     APP_ENV=dev
     APP_SECRET=24209e2e73cff25fd43b74b21cf4e173
 
-et colle-le dans le fichier `.env.local`.
+et collez-le dans le fichier `.env.local`.
 
 Copiez aussi le bloc dans le fichier `.env` :
 
     DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 
-et colle-le dans le fichier `.env.local`.
+et collez-le dans le fichier `.env.local`.
 
 Ensuite, modifiez la ligne `DATABASE_URL` du fichier `.env.local` pour que Symfony puisse accéder à votre BDD.
 
