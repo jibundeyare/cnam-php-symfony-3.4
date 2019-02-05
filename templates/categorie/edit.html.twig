@@ -1,0 +1,34 @@
+{# templates/categorie/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Édition de la catégorie {{ categorie.libelle }}{% endblock %}
+
+{% block body %}
+
+{# @todo ajouter un lien pour revenir à la liste sans rien changer #}
+
+<form method="post">
+    <div>
+        <input name="numcat" type="text" value="{{ categorie.numcat }}" readonly />
+    </div>
+    {% if errors.libelle is defined %}
+    <div>
+        {{ errors.libelle }}
+    </div>
+    {% endif %}
+    <div>
+        <input name="libelle" type="text" value="{{ categorie.libelle }}" />
+    </div>
+    {% if errors.tauxtva is defined %}
+    <div>
+        {{ errors.tauxtva }}
+    </div>
+    {% endif %}
+    <div>
+        <input name="tauxtva" type="text" value="{{ categorie.tauxtva }}" />
+    </div>
+    <div>
+        <button>Valider</button>
+    </div>
+</form>
+{% endblock %}

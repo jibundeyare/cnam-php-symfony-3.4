@@ -10,6 +10,7 @@
         <th>numcat</th>
         <th>libelle</th>
         <th>tauxtva</th>
+        <th>action</th>
     </tr>
     {% for categorie in categories %}
         <tr>
@@ -21,6 +22,9 @@
             </td>
             <td>
                 {{ categorie.tauxtva }}
+            </td>
+            <td>
+                <a href="/categorie/{{ categorie.numcat }}">modifier</a>
             </td>
         </tr>
     {% endfor %}
