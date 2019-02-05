@@ -1,0 +1,45 @@
+{# templates/security/register.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Inscription{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div>
+        <label for="login">Identifiant</label>
+    </div>
+    {% if errors.login is defined %}
+    <div>
+        {{ errors.login }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="login" name="login" type="text" value="{{ user.login }}" />
+    </div>
+    <div>
+        <label for="password">Mot de passe</label>
+    </div>
+    {% if errors.password is defined %}
+    <div>
+        {{ errors.password }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="password" name="password" type="password" value="{{ user.password }}" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+    </div>
+    {% if errors.email is defined %}
+    <div>
+        {{ errors.email }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="email" name="email" type="email" value="{{ user.email }}" />
+    </div>
+    <div>
+        <button>Valider</button>
+    </div>
+</form>
+{% endblock %}

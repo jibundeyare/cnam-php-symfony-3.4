@@ -1,0 +1,42 @@
+{# templates/security/profile.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Profile{% endblock %}
+
+{% block body %}
+{# @todo afficher les notifications du flashbag #}
+
+<form method="post">
+    <div>
+        <label for="login">Identifiant</label>
+    </div>
+    <div>
+        <input id="login" name="login" type="text" value="{{ user.login }}" readonly />
+    </div>
+    <div>
+        <label for="password">Mot de passe</label>
+    </div>
+    {% if errors.password is defined %}
+    <div>
+        {{ errors.password }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="password" name="password" type="password" value="{{ user.password }}" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+    </div>
+    {% if errors.email is defined %}
+    <div>
+        {{ errors.email }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="email" name="email" type="email" value="{{ user.email }}" />
+    </div>
+    <div>
+        <button>Valider</button>
+    </div>
+</form>
+{% endblock %}

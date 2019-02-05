@@ -1,0 +1,35 @@
+{# templates/security/login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Connexion{% endblock %}
+
+{% block body %}
+
+<form method="post">
+    <div>
+        <label for="login">Identifiant</label>
+    </div>
+    {% if errors.login is defined %}
+    <div>
+        {{ errors.login }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="login" name="login" type="text" value="{{ formData.login }}" />
+    </div>
+    <div>
+        <label for="password">Mot de passe</label>
+    </div>
+    {% if errors.password is defined %}
+    <div>
+        {{ errors.password }}
+    </div>
+    {% endif %}
+    <div>
+        <input id="password" name="password" type="password" value="{{ formData.password }}" />
+    </div>
+    <div>
+        <button>Valider</button>
+    </div>
+</form>
+{% endblock %}
