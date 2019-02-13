@@ -1,9 +1,15 @@
+{# templates/categorie/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title%}Catégorie index{% endblock %}
 
 {% block body %}
 <h1>Catégorie index</h1>
+
+<p>
+    {# génération d'un lien qui pointe vers la page de création #}
+    <a href="{{ path('categorie_new') }}">ajouter une catégorie</a>
+</p>
 
 <table>
     <tr>
@@ -24,7 +30,10 @@
                 {{ categorie.tauxtva }}
             </td>
             <td>
-                <a href="/categorie/{{ categorie.numcat }}">modifier</a>
+                {# génération d'un lien qui pointe vers la page de visualisation #}
+                <a href="{{ path('categorie_show', { numcat: categorie.numcat}) }}">voir</a>
+                {# génération d'un lien qui pointe vers la page de modification  #}
+                <a href="{{ path('categorie_edit', { numcat: categorie.numcat}) }}">modifier</a>
             </td>
         </tr>
     {% endfor %}

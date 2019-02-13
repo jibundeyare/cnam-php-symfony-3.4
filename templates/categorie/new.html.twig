@@ -1,14 +1,13 @@
-{# templates/categorie/edit.html.twig #}
+{# templates/categorie/new.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title%}Édition de la catégorie {{ categorie.libelle }}{% endblock %}
+{% block title%}Création d'une nouvelle catégorie{% endblock %}
 
 {% block body %}
+
 <p>
-    {# génération d'un lien qui pointe vers la liste #}
-    <a href="{{ path('categorie_index') }}">liste des catégories</a><br />
-    {# génération d'un lien qui pointe vers la page de visualisation #}
-    <a href="{{ path('categorie_show', { numcat: categorie.numcat }) }}">voir cette catégorie</a>
+    {# génération d'un lien qui pointe vers la liste  #}
+    <a href="{{ path('categorie_index') }}">liste des catégories</a>
 <p>
 
 <form method="post">

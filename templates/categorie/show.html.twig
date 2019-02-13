@@ -1,0 +1,23 @@
+{# templates/categorie/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Édition de la catégorie {{ categorie.libelle }}{% endblock %}
+
+{% block body %}
+<p>
+    {# génération d'un lien qui pointe vers la liste #}
+    <a href="{{ path('categorie_index') }}">liste des catégories</a><br />
+    {# génération d'un lien qui pointe vers la page de modification #}
+    <a href="{{ path('categorie_edit', { numcat: categorie.numcat }) }}">modifier cette catégorie</a>
+<p>
+
+<div>
+    <input name="numcat" type="text" value="{{ categorie.numcat }}" placeholder="numcat" readonly />
+</div>
+<div>
+    <input name="libelle" type="text" value="{{ categorie.libelle }}" placeholder="libelle" readonly />
+</div>
+<div>
+    <input name="tauxtva" type="text" value="{{ categorie.tauxtva }}" placeholder="tauxtva" readonly />
+</div>
+{% endblock %}
