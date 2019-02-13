@@ -4,11 +4,16 @@
 {% block title%}Profile{% endblock %}
 
 {% block body %}
-{# @todo afficher les notifications du flashbag #}
+{# afficher les messages flashs #}
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
 
 <form method="post">
     <div>
-        <label for="login">Identifiant</label>
+        <label for="login">Identifiant (non modifiable)</label>
     </div>
     <div>
         <input id="login" name="login" type="text" value="{{ user.login }}" readonly />

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Method;
 class SecurityController extends AbstractController
 {
     private $conn;
+    private $session;
 
     public function __construct(Connection $conn, SessionInterface $session)
     {
@@ -53,7 +54,8 @@ class SecurityController extends AbstractController
             if (password_verify($formData['password'], $user['password_hash'])) {
                 // le mot de passe est correct
 
-                // @todo stocker les données du compte utilisateur dans la variable de session
+                // stocker les données du compte utilisateur dans la variable de session
+                $this->session->set('user', $user);
 
                 // redirection vers une autre page
                 return $this->redirectToRoute('security_secured');
@@ -99,30 +101,36 @@ class SecurityController extends AbstractController
                 'login' => $user['login'],
             ]);
 
-            if (empty($request->request->get('login'))) {
+            if (empty($user['login'])) {
                 $errors['login'] = 'Veuillez renseigner ce champ';
+            } elseif (strlen($user['login']) < 4) {
+                $errors['login'] = 'Veuillez renseigner un identifiant de 4 caractères minimum';
             } else if ($userWithSameLogin) {
-                $errors['login'] = 'Ce login est déjà utilisé';
+                $errors['login'] = 'Cet identifiant est déjà utilisé';
             }
 
-            if (empty($request->request->get('password'))) {
+            if (empty($user['password'])) {
                 $errors['password'] = 'Veuillez renseigner ce champ';
+            } elseif (strlen($user['password']) < 8) {
+                $errors['password'] = 'Veuillez renseigner un mot de passe de 8 caractères minimum';
             }
 
-            if (empty($request->request->get('email'))) {
+            if (empty($user['email'])) {
                 $errors['email'] = 'Veuillez renseigner ce champ';
+            } elseif (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Veuillez renseigner un email valide';
             }
 
             if (!$errors) {
                 // le mot de passe n'est pas stocké en BDD, seul le hash du mot de passe est stocké
                 // création du hash à partir du mot de passe
-                $hash = password_hash($user['password'], PASSWORD_DEFAULT);
+                $user['password_hash'] = password_hash($user['password'], PASSWORD_DEFAULT);
 
                 // exécution de la requête et récupération du nombre de lignes affectées dans la variable `$count`
                 $count = $this->conn->insert('user', [
                     'login' => $user['login'],
                     'email' => $user['email'],
-                    'password_hash' => $hash,
+                    'password_hash' => $user['password_hash'],
                 ]);
 
                 // récupération de l'id de la dernière ligne créée par la BDD dans la variable `$lastInsertId`
@@ -132,6 +140,9 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('security_login');
             }
         }
+
+        // le mot de passe n'est pas stocké en BDD et ne doit pas être affiché
+        $user['password'] = null;
 
         // affichage du rendu d'un template
         return $this->render('security/register.html.twig', [
@@ -146,9 +157,13 @@ class SecurityController extends AbstractController
      */
     public function profile(Request $request)
     {
-        // @todo filtrer les utilisateurs avec la session
-        // @todo récupération des données de l'utilisateur depuis la variable de session
-        $user = null;
+        // filtrer les utilisateurs avec la session
+        if (!$this->session->get('user')) {
+            return $this->redirectToRoute('security_login');
+        }
+
+        // récupération des données de l'utilisateur depuis la variable de session
+        $user = $this->session->get('user');
 
         // récupération des données du compte utilisateur
         $user = $this->conn->fetchAssoc('SELECT * FROM `user` WHERE `id` = :id', [
@@ -168,29 +183,36 @@ class SecurityController extends AbstractController
             // @info le login n'est pas modifiable
 
             // vérification que le champ n'est pas vide
-            if (empty($request->request->get('password'))) {
+            if (empty($user['password'])) {
                 $errors['password'] = 'Veuillez renseigner ce champ';
             }
 
             // vérification que le champ n'est pas vide
-            if (empty($request->request->get('email'))) {
+            if (empty($user['email'])) {
                 $errors['email'] = 'Veuillez renseigner ce champ';
             }
 
             if (!$errors) {
                 // création du hash à partir du mot de passe
-                $hash = password_hash($user['password'], PASSWORD_DEFAULT);
+                $user['password_hash'] = password_hash($user['password'], PASSWORD_DEFAULT);
 
                 // exécution de la requête et récupération du nombre de lignes affectées dans la variable `$count`
                 $count = $this->conn->update('user', [
                     'email' => $user['email'],
-                    'password_hash' => $hash,
+                    'password_hash' => $user['password_hash'],
                 ], ['id' => $user['id']]);
 
                 // récupération de l'id de la dernière ligne créée par la BDD dans la variable `$lastInsertId`
                 $lastInsertId = $this->conn->lastInsertId();
 
-                // @todo ajouter une notification dans un flashbag
+                // mise à jour de la variable de session
+                $this->session->set('user', $user);
+
+                // ajouter un message flash
+                $this->addFlash(
+                    'notice',
+                    'Vos changements ont été enregistrés'
+                );
             }
         }
 
@@ -210,9 +232,11 @@ class SecurityController extends AbstractController
      */
     public function logout(Request $request)
     {
-        // @todo filtrer les utilisateurs avec la session
-
-        // @todo supprimer toutes les données de la variable de session avec clear()
+        // filtrer les utilisateurs avec la session
+        if ($this->session->get('user')) {
+            // supprimer toutes les données de la variable de session
+            $this->session->clear();
+        }
 
         // redirection vers la page login
         return $this->redirectToRoute('security_login');
@@ -223,9 +247,13 @@ class SecurityController extends AbstractController
      */
     public function secured(Request $request)
     {
-        // @todo filtrer les utilisateurs avec la session
-        // @todo récupération des données de l'utilisateur depuis la variable de session
-        $user = null;
+        // filtrer les utilisateurs avec la session
+        if (!$this->session->get('user')) {
+            return $this->redirectToRoute('security_login');
+        }
+
+        // récupération des données de l'utilisateur depuis la variable de session
+        $user = $this->session->get('user');
 
         // affichage du rendu d'un template
         return $this->render('security/secured.html.twig', [
