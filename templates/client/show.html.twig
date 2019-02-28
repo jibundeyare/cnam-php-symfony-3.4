@@ -1,0 +1,21 @@
+{# templates/client/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Détails du client {{ client.nom }} à {{ client.ville }}{% endblock %}
+
+{% block body %}
+<p>
+    {# génération d'un lien qui pointe vers la liste #}
+    <a href="{{ path('client_index') }}">liste des clients</a><br />
+<p>
+
+<div>
+    <input name="numclient" type="text" value="{{ client.numclient }}" placeholder="numclient" readonly />
+</div>
+<div>
+    <input name="nom" type="text" value="{{ client.nom }}" placeholder="nom" readonly />
+</div>
+<div>
+    <input name="ville" type="text" value="{{ client.ville }}" placeholder="ville" readonly />
+</div>
+{% endblock %}

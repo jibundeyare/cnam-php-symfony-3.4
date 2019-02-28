@@ -1,0 +1,33 @@
+{# templates/client/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title%}Liste des clients{% endblock %}
+
+{% block body %}
+<h1>Liste des clients</h1>
+
+<table>
+    <tr>
+        <th>numclient</th>
+        <th>nom</th>
+        <th>ville</th>
+    </tr>
+    {% for client in clients %}
+        <tr>
+            <td>
+                {{ client.numclient }}
+            </td>
+            <td>
+                {{ client.nom }}
+            </td>
+            <td>
+                {{ client.ville }}
+            </td>
+            <td>
+                {# génération d'un lien qui pointe vers la page de visualisation #}
+                <a href="{{ path('client_show', { numclient: client.numclient}) }}">voir</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
