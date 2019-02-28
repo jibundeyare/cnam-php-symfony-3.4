@@ -90,6 +90,8 @@ Mais si vous êtes motivé, vous pouvez ajouter les actions suivantes :
 
 ### Contraintes techniques
 
+Le contrôleur des catégories se trouve dans le fichier `src/CategorieController.php`.
+
 Le contrôleur des clients se trouve dans le fichier `src/ClientController.php`.
 
 Les templates se trouvent dans le dossier `templates/client` :
