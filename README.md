@@ -107,7 +107,7 @@ Pensez alors à adapter les templates.
 
 Pour vous aider à mieux cerner le problème voici une analyse des données.
 
-#### Analyse de la page `inscription`
+#### Analyse de la page `client`
 
 | champ     | name      | type    | balise          | obligatoire |
 |-----------|-----------|---------|-----------------|-------------|
