@@ -90,14 +90,19 @@ Mais si vous êtes motivé, vous pouvez ajouter les actions suivantes :
 
 ### Contraintes techniques
 
-Le contrôleur des catégories se trouve dans le fichier `src/CategorieController.php`.
-
 Le contrôleur des clients se trouve dans le fichier `src/ClientController.php`.
+
+Dans le contrôleur `src/ClientController.php`, vous devez terminer d'écrire les fonctions :
+
+- `index()` pour afficher la liste des clients
+- `show()` pour afficher les détails d'un client
 
 Les templates se trouvent dans le dossier `templates/client` :
 
 - `templates/client/index.html.twig` affiche la liste des clients
 - `templates/client/show.html.twig` affiche les détails d'un client
+
+Le contrôleur des catégories se trouve dans le fichier `src/CategorieController.php`.
 
 ### Analyse
 
