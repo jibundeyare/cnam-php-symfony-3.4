@@ -14,7 +14,8 @@ Rendez-vous dans le dossier dans lequel vous avez dézippé le fichier, puis tap
 ## Base de données
 
 Le fichier SQL `cnam_bdmicro.sql` à la racine du projet contient un export de la BDD.
-Vous devez importer cette BDD (avec PhpMyAdmin par exemple) avant de pouvoir utiliser ce projet.
+Le projet est prévu pour fonctionner avec la structure de cette BDD.
+Pour importer cette BDD (avec PhpMyAdmin par exemple), vous devez d'abord créer une nouvelle BDD, puis choisir l'option *Importer*.
 
 ## Configuration de l'accès à la base de données
 
